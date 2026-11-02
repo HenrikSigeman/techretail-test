@@ -100,3 +100,11 @@ def test_nollpris_ger_noll_efter_rabatt():
 
     # Assert
     assert resultat == 0.0
+
+@pytest.mark.parametrize("ordervarde, frakt", [(499.99, 49.0), (500, 0.0), (0, 49.0), (1, 49.0), (99, 49.0)]) 
+def test_frakt_vid_gransen(ordervarde, frakt): 
+    assert shipping_cost(ordervarde) == frakt
+
+@pytest.mark.parametrize("pris, rabatteratPris", [(10, 9), (9.12, 8.21), (526.83, 474.15), (10557.97, 9502.17)])
+def test_decimaler_efter_rabatt(pris, rabatteratPris):
+    assert apply_discount(pris, 10) == rabatteratPris
