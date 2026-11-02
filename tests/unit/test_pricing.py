@@ -50,3 +50,43 @@ def test_exempel_negativ_rabatt_ger_valueerror():
 #
 # Kör dina tester med:  uv run pytest tests/unit -v
 # Kontrollera milstolpen med:  make milstolpe L=1
+def test_100_procent_rabatt_ger_pris_noll(): 
+    # Arrange 
+    pris = 349 
+    # Act 
+    resultat = apply_discount(pris, 100) 
+    # Assert 
+    assert resultat == 0.0
+
+
+def test_101_procent_rabatt_ger_valueerror(): 
+    # Arrange 
+    pris = 349 
+    # Act och Assert 
+    with pytest.raises(ValueError): 
+        apply_discount(pris, 101) 
+
+
+def test_15_procent_pa_99_99_avrundas_till_hela_oren(): 
+    # Arrange 
+    pris = 99.99 
+    # Act 
+    resultat = apply_discount(pris, 15) 
+    # Assert 
+    assert resultat == 84.99
+
+def test_frakt_49_kr_strax_under_500(): 
+    # Arrange 
+    ordervarde = 499.99 
+    # Act 
+    frakt = shipping_cost(ordervarde) 
+    # Assert 
+    assert frakt == 49.0
+
+def test_fri_frakt_precis_vid_500(): 
+    # Arrange 
+    ordervarde = 501 
+    # Act 
+    frakt = shipping_cost(ordervarde) 
+    # Assert 
+    assert frakt == 00.0 
