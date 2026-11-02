@@ -90,3 +90,13 @@ def test_fri_frakt_precis_vid_500():
     frakt = shipping_cost(ordervarde) 
     # Assert 
     assert frakt == 00.0 
+
+def test_nollpris_ger_noll_efter_rabatt():
+    # Arrange
+    pris = 0
+
+    # Act
+    resultat = apply_discount(pris, 15)
+
+    # Assert
+    assert resultat == 0.0
