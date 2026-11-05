@@ -30,3 +30,28 @@ Kör dina tester med:        uv run pytest tests/gui -v
 Se webbläsaren medan de kör: uv run pytest tests/gui --headed --slowmo 500
 Kontrollera milstolpen med:  make milstolpe L=2
 """
+from playwright.sync_api import expect 
+from pages.product_page import ProductPage 
+def test_produktsidan_visar_namnet(page): 
+  # Arrange 
+  product_page = ProductPage(page) 
+  # Act 
+  product_page.open(1) 
+  # Assert 
+  expect(product_page.name).to_have_text("Skruvdragare 18 V")
+
+def test_en_vara_ger_raknaren_1(page): 
+  # Arrange 
+  product_page = ProductPage(page).open(3) 
+  # Act 
+  product_page.add_to_cart() 
+  # Assert 
+  product_page.expect_cart_count(1)
+
+def test_tre_varor_ger_raknaren_3(page): 
+  # Arrange 
+  product_page = ProductPage(page).open(4) 
+  # Act 
+  product_page.add_to_cart(3) 
+  # Assert 
+  product_page.expect_cart_count(3) 

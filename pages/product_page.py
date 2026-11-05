@@ -20,17 +20,19 @@ class ProductPage(BasePage):
         #   - priset                                     tips: get_by_test_id("product-price")
         #   - fältet för antal                           tips: get_by_label(...)
         #   - knappen "Lägg i kundvagn"                  tips: get_by_role("button", name=...)
-        self.name = None
-        self.price = None
-        self.quantity_input = None
-        self.add_to_cart_button = None
+        self.name = page.get_by_role("heading", level=1)
+        self.price = page.get_by_test_id("product-price")
+        self.quantity_input = page.get_by_label("Antal")
+        self.add_to_cart_button = page.get_by_role("button", name="Lägg i kundvagn")
 
     def open(self, product_id: int) -> "ProductPage":
         """Gå till produktsidan för product_id och returnera self."""
-        # TODO 2: Gå till /produkter/<product_id>. Titta på BasePage.open för inspiration.
-        raise NotImplementedError("TODO 2: implementera ProductPage.open")
+        #  TODO 2: gå till /produkter/<product_id> 
+        self.page.goto(f"/produkter/{product_id}") 
+        return self 
 
     def add_to_cart(self, quantity: int = 1) -> None:
         """Fyll i antal och klicka på "Lägg i kundvagn"."""
         # TODO 3: Fyll i quantity i antal-fältet (som text) och klicka på knappen.
-        raise NotImplementedError("TODO 3: implementera ProductPage.add_to_cart")
+        self.quantity_input.fill(str(quantity))
+        self.add_to_cart_button.click()

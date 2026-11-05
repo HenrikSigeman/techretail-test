@@ -67,6 +67,14 @@ Inledningsvis kommer kostnaden att vara ganska hög. Tid kommer att gå ifrån a
 ## 3. Testnivåer och verktyg
 
 *Hur fördelar du testerna på testpyramidens nivåer komponent (enhet), API och GUI? Ge exempel ur ditt eget repo för varje nivå. Vilka verktyg använder du, och vad körs vid varje push respektive nattligt?*
+| Nivå | Exempel i mitt repo | Verktyg | 
+|---|---|---| 
+| Komponent | tests/unit/test_pricing.py | pytest | 
+| API | (lektion 4) | | 
+| GUI | tests/gui/test_produkt.py | Playwright med Page Objects | 
+Verktyg för GUI-tester: Playwright. De mest relevanta föredelarna med Playwright over Selenium var i ämnena Väntan och Stabilitet (sparar oss mycket tid och frustration om vi använder ett verktyg som aktivt lyssnar efter att elementen laddats in klart framför att behöva vänta en satt tid.), och Felsökning (Playwrights Trace-funktion är mer detaljerad och lättläst snarare än loggar som Selenium använder.) Selenium har vissa fördelar när det kommer till kriteriet "Webbläsare och enheter" eftersom att den tillåter att man testar riktiga mobiler med hjälp av Appium.
+Fall som testas i webbläsaren: MT-01, MT-04, MT-08, MT-11, MT-25. MT-13 är ett komponenttest.
+Kvar för Karin: Karin behöver göra GUI-testerna på Android och iPhone eftersom att Playwright inte täcker dessa.
 
 ## 4. AI-användning
 
