@@ -76,6 +76,77 @@ Verktyg för GUI-tester: Playwright. De mest relevanta föredelarna med Playwrig
 Fall som testas i webbläsaren: MT-01, MT-04, MT-08, MT-11, MT-25. MT-13 är ett komponenttest.
 Kvar för Karin: Karin behöver göra GUI-testerna på Android och iPhone eftersom att Playwright inte täcker dessa.
 
+
+Vad i utkastet går sönder först om butiken ändras, och vad händer om tjugo tester är skrivna såhär?
+Svar: Testet "test_example" är inte bra implementerat av flera anledningar och vi bör inte använda den som en mall för att skriva fler tester just nu. För tillfället är det största problemet att adressen till webbsidan är hårdkodad, och utifall att vi ändrar namnen på våra produktsidor (idag "produkter") så kommer vi att behöva skriva om alla test för hand för att reflektera denna ändring så att testen kan köras. Om vi till exempel har 20 tester som är uppbyggda på detta sätt med direkt hårdkodad adress så kommer de alla att behöva ändras för hand om vi ändrar hur man navigerar på webbsidan. Den enda fördelen är att vi kan, genom att hårdkoda adressen, få bättre läsbarhet och att det kan vara snabbare att skriva utifall att det rör sig om ett testplats som vi inte har implementerat i något Page Object än. Men nackdelarna väger fortfarande tyngre än fördelarna.
+
+Vad gör ditt Page Object bättre, och vad koster det att ha det?
+Svar: Med hjälp av mitt Page Object så behöver vi bara ändra på en enda plats utifall navigationen på webbsidan ändras. Alla adresser som pekar mot produktsidor bör komma ifrån product_page.py, så det är där som koden för att navigera, och interagera med sidan bör ligga. Detta gäller inte bara för navigering, utan vi kan också skapa referenser till olika element på sidan, exempelvis kvantitets-fältet och "lägg till i kundvagn"-knappen, så att vi i tester kan referera till dessa variabler som tillhör Page Object:et istället för att skriva referenser för hand (som kan innehålla stavfel och vara känsliga för förändringar). Kostnaden är såklart att vi behöver lägga tid för att göra variabler för alla element som vi vill använda. Enkla sidor med varningstext behöver inte någon detaljerat Page Object, men sidor som produktsidan där det finns flera stycken intressanta element är en mycket stark kandidat för att utformas på detta sätt. Den initiala kostnaden är såklart högre än att skriva testen manuellt som i exemplet, då tid lägs på annat än att skriva de faktiska testerna, men man tjänar på att ha det utifall följande är sann: tid för att skapa Page Object + tid för att ändra Page Object när butiken ändras < (tid för att implementera test med codegen * antalet tester) + (tid för att ändra codegen-skrivna tester när butiken ändras * antalet tester).
+
+När är codegen ändå värt att använda?
+Svar: Codegen är bättre för att göra många, små och utforskande tester. Temporära tester som sedan ska tas bort eller dylikt. Codegen kan hjälpa oss att skriva grunden för tester på ett intuitivt sätt, precis som våra användare gör, genom att skriva, klicka och navigera på vår webbsida. Codegen genererar stegen, som vi sedan kan skriva om till "riktiga" tester med hjälp av Page Object, och det kan i vissa fall gå mycket snabbare att göra det på detta sätt, speciellt om det krävs många steg som kan vara svårt för en utvecklare att ha koll på i huvudet, och det gör också att inte steg hoppas över lika lätt, som det hade kunnat göras om man skrev testen för hand från början.
+
+Fördjupningskort:
+Lista på Page Objects:
+login_page, home_page, product_list_page, product_page, page_header
+
+Lokaliserare:
+login_page:
+    page.get_by_role("input", name="email")
+    page.get_by_test_id("login-button")
+
+    Skör lokaliserare:
+        page.get_by_text("Logga in")
+            Anledning: Att leta efter en knapp med hjälp av dess text är i många fall tillräckligt, men om texten av någon anledning kommer att ändras så kommer testet inte längre att fungera.
+
+product_list_page:
+    page.get_by_test("search-input")
+    page.get_by_test_id("result-count")
+
+    Skör lokaliserare:
+        page.get_by_text("9 produkter")
+            Anledning: Det är ett för föränderligt attribut. Beroende på innehållet på sidan så kan det finnas väldigt många olika antal produkter, så att söka på en attribut efter texten "10 produkter" kan i många fall leda till misslyckade lokaliseringar. Speciellt eftersom att när sidan öppnas så står det "10 produkter" istället för 9.
+
+product_page:
+    page.get_by_label("Antal")
+    page.get_by_test_id("product-price")
+
+    skör lokaliserare:
+        page.get_by_text("129,00 kr")
+            Anledning: Om produkten på sidan inte kostar exakt 129,00 kr och har det i "product-price" fältet så kommer inte elementet att hittas
+
+page_header:
+    page.get_by_test_id("login-link")
+    page.get_by_test_id("cart-link")
+
+    skör lokaliserare:
+        page.locator("Xpath=//logga-in)
+            Anledning: Från lösningsförslaget "En XPath genom sidhuvudets delar går sönder när menyn byggs om"
+
+MT-25 i ord:
+Arrange:
+    Skapa Page Object product_page för produktsidan Multiverktyg 300W genom open(n)
+
+Act:
+    hämta "lägg-i-kundvagnen"-knappen, och kör ".click()" på den.
+
+Assert:
+    expect att "lägg-i-kundvagnen" ska vara disabled.
+    expect_cart_count ska vara 0
+    Elementet associerat med test_id "stock-status" ska ha texten "Slut i lager".
+
+Vad kostar GUI-testerna:
+    GUI-tester kostar i regel mycket mer tid än att bara köra komponenttester, därför bör inte alla våra testfall också innehålla GUI-tester om det inte är explicit motiverat.
+    
+    Rimligtvis bör MT-4 göras en gång som ett GUI-test för att se att webbsidan agerar som förväntat och visar rätt resultet, men om man vill göra många tester mot själva sök-systemet bör de göras som API-tester fortsättningsvis.
+
+    Test för olika felinloggningar kan göras med hjälp av API-tester. Man behöver bara göra ett GUI-test i dessa fall då vi redan känner till resultatet från login-anropet vid fel, och GUI-t förväntas reagera på samma sätt oavsett vilken permutation som skapar felet.
+
+Det vi vinner på detta är snabbare tester och snabbare återkoppling. Vi kan göra fler tester under kortare tid, testa bredare utan att påverka testtiderna speciellt mycket. GUI-test behövs fortfarande för att kontrollera att GUI-t agerar som förväntat, då API-tester förbipasserar webbgränssnittet och gör direkta anrop till våran kod utan att involvera front-end:en.
+
+
+
+
 ## 4. AI-användning
 
 *Hur använder du AI för att ta fram och förbättra tester? Hur granskar du resultatet med GRANSKA-kortet? Hänvisa till poster i `ai/AI-logg.md`.*
