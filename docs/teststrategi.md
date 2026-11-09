@@ -3,7 +3,7 @@
 > Den här filen är en del av inlämningen. Du fyller på den under kursen – börja i lektion 1 och skriv klart i lektion 9.
 > Skriv kort och konkret. Motivera dina val med TechRetails situation, inte med allmänna påståenden.
 
-**Författare:** Henrik Sigeman
+**Författare:** Henrik Aron Johan Sigeman
 **Senast uppdaterad:** 2026-11-02
 
 ## 1. Nuläge och mognad
