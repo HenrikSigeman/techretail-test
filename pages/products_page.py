@@ -23,15 +23,8 @@ class ProductsPage(BasePage):
         """Sök efter en produkt med given sökterm."""
         self.search_input.fill(query)
         self.search_button.click()
-        # Vänta på att resultaten uppdateras
-        self.page.wait_for_load_state("networkidle")
         return self
 
-    def get_products_count(self) -> int:
-        res = 0
-        for i in range(self.product_cards.count()):
-            res += 1
-        return res
 
     def get_product_names(self) -> list[str]:
         """Returnera namn på alla produkter som visas."""

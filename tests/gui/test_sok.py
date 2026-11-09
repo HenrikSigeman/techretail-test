@@ -7,12 +7,11 @@ from playwright.sync_api import expect
 from pages.products_page import ProductsPage
 
 
-def test_sokning_efter_lampa_visar_resultat(page):
+def test_sokning_efter_lampa_visar_ratt_antal_produkter(page):
     # Arrange
-    products_page = ProductsPage(page)
+    products_page = ProductsPage(page).open()
     
     # Act
-    products_page.open()
     products_page.filter_by("lampa")
     
     # Assert - Söksidan bör visa produkter
