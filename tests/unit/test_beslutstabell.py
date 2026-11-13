@@ -28,6 +28,7 @@ def att_betala(delsumma: float, rabatt_procent: float) -> float:
         pytest.param(600, 0, 600.0, id="R2-ingen-rabatt-over-500-fri-frakt"),
         pytest.param(550, 10, 544.0, id="R3-rabatten-tar-beloppet-under-500-ger-frakt"),
         pytest.param(1000, 10, 900.0, id="R4-rabatt-och-fortfarande-over-500-fri-frakt"),
+        pytest.param(580, 15, 542.0, id="R3-vinter15-580-get-frakt"),
     ],
 )
 def test_exempel_beslutstabell_att_betala(delsumma, rabatt_procent, forvantat):

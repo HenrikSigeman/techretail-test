@@ -158,3 +158,9 @@ Det vi vinner på detta är snabbare tester och snabbare återkoppling. Vi kan g
 ## 6. Hållbarhet – mätning före och efter
 
 *Vilken resursbesparande åtgärd har du gjort (till exempel kortare körtid, färre CI-minuter, smartare testurval)? Vad visade mätningen före och efter? Vad kostade AI-användningen?*
+
+Förslag: vid varje push kör vi endast röktesterna, och hela sviten körs nattligt och före release. 
+Före: hela sviten tog 9,34 sekunder lokalt (29 tester). 
+Efter: röktesterna tog 1,01 sekunder lokalt (3 tester). 
+Pipelinen på GitHub tog 34 sekunder. 
+Risk: ett fel som endast GUI-testerna hittar syns först i nattkörningen. Med snabbare pipeline så kan också Rebound-effekten uppstå, så att utvecklare pushar fler committs och oftare och potentiellt gör att vi använder fler CI-minuter än innan uppdelningen. 
