@@ -161,6 +161,24 @@ När skulle du ändra beslutet, till exempel om ett fel i kassan slank igenom?
 Om den metod vi använder för att dela upp testen inte ger tillfredställande resultat är det ett bra tillfälle att överväga ändringar. Om ett fel i systemet tillåter sig bli utnyttjad så att vi går miste om inkomst bör vi överväga att flytta de testen från release till nattligt, eller nattligt till vid varje push tills testet döms stabilt.
 Om prioriteringarna i den nuvarande situationen inte reflekteras i hur vi prioriterar våra test bör vi ändra våra beslut.
 
+# Fördjupningsuppgift L03, Fråga F.2:
+
+Vilken nivå når dimensionen Process och CI/CD med ert förslag? Vilket bevis saknas för nivå 3? 
+
+Bevis: Planering för vad som händer vid rött pipeline-test sker per team men inte gemensamt. 
+
+Det finns en plan och ett tillvägagångssät, tydliga förväntningar och alla utvecklare är medvetna om reglerna. 
+
+Inga nya dokumenterat sätt för hela organisationen finns. 
+
+Process och CI/CD är fortfarande på nivå 2. 
+
+Exempel på vad som saknas för att nå nivå 3 är steg som också inkluderar resten av organisationen, som incidentrapporter till ledningen eller explicita regler för när man ska informera andra delar av organisationen. 
+
+Att Anna följer upp på testerna är bra, men hade också behövt finnas regel för att informera till exempel Marcus. 
+
+
+
 
 ## 4. AI-användning
 
@@ -179,3 +197,13 @@ Före: hela sviten tog 9,34 sekunder lokalt (29 tester).
 Efter: röktesterna tog 1,01 sekunder lokalt (3 tester). 
 Pipelinen på GitHub tog 34 sekunder. 
 Risk: ett fel som endast GUI-testerna hittar syns först i nattkörningen. Med snabbare pipeline så kan också Rebound-effekten uppstå, så att utvecklare pushar fler committs och oftare och potentiellt gör att vi använder fler CI-minuter än innan uppdelningen. 
+
+
+# Fördjupningsuppgift L03, Fråga F.3:
+Vad kostar Karins nattliga matris i CI-minuter per natt och per vecka? Är det värt det? 
+
+GUI-tester i Chromium, Firefox och Webkit. För varje browser tar det 3 minuter och 20 sekunder (Avrundas upp till 4 CI-minuter), så för tre stycken tar det 12 CI-minuter. 
+
+Varje natt kostar det alltså 12 CI-minuter att köra GUI testen i tre webbläsare, så per vecka blir det 84 CI-minuter. Det är definitivt värt det, och om testen uppskattas stabila så kan testerna för Firefox och Webkit utföras i samband med Release istället för nattligen.
+
+
