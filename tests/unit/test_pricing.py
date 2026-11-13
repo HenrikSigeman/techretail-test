@@ -35,76 +35,72 @@ def test_exempel_negativ_rabatt_ger_valueerror():
         apply_discount(pris, -1)
 
 
-# TODO (lektion 1): Skriv minst 5 egna tester här under.
-#
-# Regler för dina tester:
-#   - Namnet ska börja med test_ men INTE med test_exempel_ (då räknas de inte).
-#   - Ett test kontrollerar en sak. Använd AAA-kommentarerna som i exemplen.
-#
-# Använd gränsvärden och ekvivalensklasser. Förslag:
-#   1. Gränsvärdet 100 procent: vad ska priset bli?
-#   2. Strax över gränsen: 101 procent.
-#   3. Avrundning till hela ören: 15 procent på 99,99 kr.
-#   4. Frakt strax under gränsen: ordervärde 499,99 kr.
-#   5. Frakt precis på gränsen: ordervärde 500 kr.
-#
-# Kör dina tester med:  uv run pytest tests/unit -v
-# Kontrollera milstolpen med:  make milstolpe L=1
-def test_100_procent_rabatt_ger_pris_noll(): 
-    # Arrange 
-    pris = 349 
-    # Act 
-    resultat = apply_discount(pris, 100) 
-    # Assert 
-    assert resultat == 0.0
+# Lösning lektion 1: egna tester med gränsvärden och ekvivalensklasser.
 
 
-def test_101_procent_rabatt_ger_valueerror(): 
-    # Arrange 
-    pris = 349 
-    # Act och Assert 
-    with pytest.raises(ValueError): 
-        apply_discount(pris, 101) 
-
-
-def test_15_procent_pa_99_99_avrundas_till_hela_oren(): 
-    # Arrange 
-    pris = 99.99 
-    # Act 
-    resultat = apply_discount(pris, 15) 
-    # Assert 
-    assert resultat == 84.99
-
-def test_frakt_49_kr_strax_under_500(): 
-    # Arrange 
-    ordervarde = 499.99 
-    # Act 
-    frakt = shipping_cost(ordervarde) 
-    # Assert 
-    assert frakt == 49.0
-
-def test_fri_frakt_precis_vid_500(): 
-    # Arrange 
-    ordervarde = 501 
-    # Act 
-    frakt = shipping_cost(ordervarde) 
-    # Assert 
-    assert frakt == 00.0 
-
-def test_nollpris_ger_noll_efter_rabatt():
+def test_100_procent_rabatt_ger_pris_noll():
     # Arrange
-    pris = 0
-
+    pris = 349
     # Act
-    resultat = apply_discount(pris, 15)
-
+    resultat = apply_discount(pris, 100)
     # Assert
     assert resultat == 0.0
 
-@pytest.mark.parametrize("ordervarde, frakt", [(499.99, 49.0), (500, 0.0), (0, 49.0), (1, 49.0), (99, 49.0)]) 
-def test_frakt_vid_gransen(ordervarde, frakt): 
-    assert shipping_cost(ordervarde) == frakt
 
-@pytest.mark.parametrize("pris, rabatteratPris", [(10, 9), (9.12, 8.21), (526.83, 474.15), (10557.97, 9502.17)])
-def test_decimaler_efter_rabatt(pris, rabatteratPris):
-    assert apply_discount(pris, 10) == rabatteratPris
+def test_101_procent_rabatt_ger_valueerror():
+    # Arrange
+    pris = 349
+    # Act och Assert
+    with pytest.raises(ValueError):
+        apply_discount(pris, 101)
+
+
+def test_negativt_pris_ger_valueerror():
+    # Arrange
+    pris = -0.01
+    # Act och Assert
+    with pytest.raises(ValueError):
+        apply_discount(pris, 10)
+
+
+def test_rabatt_avrundas_till_hela_oren():
+    # Arrange: 99,99 kr minus 15 % = 84,9915 kr, som avrundas till 84,99 kr
+    pris = 99.99
+    # Act
+    resultat = apply_discount(pris, 15)
+    # Assert
+    assert resultat == 84.99
+
+
+def test_exakt_halvt_ore_avrundas_uppat():
+    # Arrange: 0,10 kr minus 25 % = 0,075 kr, som avrundas uppåt till 0,08 kr
+    pris = 0.10
+    # Act
+    resultat = apply_discount(pris, 25)
+    # Assert
+    assert resultat == 0.08
+
+
+def test_frakt_tas_ut_strax_under_gransen():
+    # Arrange
+    ordervarde = 499.99
+    # Act
+    frakt = shipping_cost(ordervarde)
+    # Assert
+    assert frakt == 49.0
+
+
+def test_fri_frakt_precis_pa_gransen():
+    # Arrange
+    ordervarde = 500
+    # Act
+    frakt = shipping_cost(ordervarde)
+    # Assert
+    assert frakt == 0.0
+
+
+@pytest.mark.parametrize("ordervarde, frakt", [(0, 49.0), (250, 49.0), (500.01, 0.0), (10_000, 0.0)])
+def test_frakt_for_ekvivalensklasser(ordervarde, frakt):
+    # Arrange: ordervarde och frakt kommer från parametriseringen
+    # Act och Assert
+    assert shipping_cost(ordervarde) == frakt
