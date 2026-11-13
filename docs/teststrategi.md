@@ -144,7 +144,22 @@ Vad kostar GUI-testerna:
 
 Det vi vinner på detta är snabbare tester och snabbare återkoppling. Vi kan göra fler tester under kortare tid, testa bredare utan att påverka testtiderna speciellt mycket. GUI-test behövs fortfarande för att kontrollera att GUI-t agerar som förväntat, då API-tester förbipasserar webbgränssnittet och gör direkta anrop till våran kod utan att involvera front-end:en.
 
+# Fördjupning 3:
+1. Vilka tester ska köras vid varje push, och vilka räcker nattligt eller före release?
+Tester som ska köras vid varje push är snabba, stabila tester som Komponenttester (12 st, för pris, rabatt och frakt. Cirka en sekund) och API-tester (Sekunder, Logiken bakom sidorna, utan webbläsare).
+Att inte göra några GUI-tester sparar tid både för att GUI-tester är i regel långsamma, men Pipelinen behöver också inte installera Chromium vid varje push, vilket tar lång tid och är kostsam i längden.
 
+Nattliga tester kan vara långsamma och mer resurskrävande än tester vid push. Eftersom att resultatet inte förväntas kontrolleras förän flera timmar senare så bör inte kritiska funktioner enbart testas vid nattliga tester.
+Lämpliga kandidater är test som körs vid push, samt GUI-tester i Chromium (7st 30 s, plus att installera webbläsaren), Samma GUI-tester i Firefox och WebKit (Lika lång tid till per webbläsare), Eriks kundvagnstest (Sekunder. Rött en gång av fem utan ändring) efter att testet är fixat. Energimätning med Eco Ci (några extra steg. Uppskattar hur mycket el pipelinen drar). Kan dels mäta kostnaden för den nattliga testningen, men kan också mäta kostnaden för de testen som körs vid push.
+
+Vid release är det passande att köra regressionstester, och Lasttest (minuter. 200 samtidiga användare belastar butiken).
+
+Vad vinner Techretail i tid och CI-minuter, och vad riskerar ni att missa?
+Genom att dela upp testen på detta vis så kan vi placera snabba och billiga test, samt de systemkritiska testen, vid varje push. Genom att begränsa hur mycket som testas så sparar vi tid och CI-minuter, men då kan det också finnas test som skulle misslyckas om de körts, och som vi inte märker av innan de schemalagda körningarna, eller körningen innan release.
+
+När skulle du ändra beslutet, till exempel om ett fel i kassan slank igenom?
+Om den metod vi använder för att dela upp testen inte ger tillfredställande resultat är det ett bra tillfälle att överväga ändringar. Om ett fel i systemet tillåter sig bli utnyttjad så att vi går miste om inkomst bör vi överväga att flytta de testen från release till nattligt, eller nattligt till vid varje push tills testet döms stabilt.
+Om prioriteringarna i den nuvarande situationen inte reflekteras i hur vi prioriterar våra test bör vi ändra våra beslut.
 
 
 ## 4. AI-användning
