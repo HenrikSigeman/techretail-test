@@ -11,6 +11,5 @@ def test_tech10_pa_199_90_kr_drar_av_tio_procent(rabattkoder):
     procent = rabattkoder["TECH10"] 
     # Act 
     resultat = apply_discount(199.90, procent)
-    199.90 - 19.99
     # Assert 
     assert resultat == 179.91
