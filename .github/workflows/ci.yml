@@ -1,5 +1,5 @@
 # CI för ditt testrepo (GitHub Actions). Körs vid varje push och pull request. 
-# Lektion 3: komponenttester och GUI-tester. 
+# Lektion 3: komponenttester och GUI-tester. Lektion 4: API-tester. 
 name: CI 
  
 on: 
@@ -34,7 +34,10 @@ jobs:
         run: uv run playwright install --with-deps chromium 
  
       - name: Starta butiken 
-        run: uv run python scripts/shop.py start
+        run: uv run python scripts/shop.py start 
+ 
+      - name: API-tester 
+        run: uv run pytest tests/api -v 
  
       - name: GUI-tester 
         run: uv run pytest tests/gui -v --tracing retain-on-failure 
@@ -45,23 +48,4 @@ jobs:
         with: 
           name: testresultat 
           path: test-results/ 
-          if-no-files-found: ignore
-
-      # Fördjupning (lektion 3, valbart): mät uppskattad energi med Eco CI.
-      # Ta bort # framför de tre stegen nedan. send-data: false gör att inga mätdata skickas till tredje part.
-      # - uses: green-coding-solutions/eco-ci-energy-estimation@v5
-      #   with: { task: start-measurement, send-data: false }
-      # (… dina teststeg …)
-      # - uses: green-coding-solutions/eco-ci-energy-estimation@v5
-      #   with: { task: get-measurement, label: "Tester", send-data: false }
-      # - uses: green-coding-solutions/eco-ci-energy-estimation@v5
-      #   with: { task: display-results, send-data: false }
-
-      # TODO 1 (lektion 3): Kör GUI-testerna i CI.
-      #   Du behöver tre steg: installera Chromium, starta butiken och köra testerna.
-      #     uv run playwright install --with-deps chromium
-      #     uv run python scripts/shop.py start
-      #     uv run pytest tests/gui -v --tracing retain-on-failure
-
-      # TODO 2 (lektion 3): Spara testresultaten så att du kan felsöka en röd körning.
-      #   Använd actions/upload-artifact@v7 med path: test-results/ och if: always()
+          if-no-files-found: ignore 
