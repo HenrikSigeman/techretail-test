@@ -70,7 +70,14 @@ Inledningsvis kommer kostnaden att vara ganska hög. Tid kommer att gå ifrån a
 | Nivå | Exempel i mitt repo | Verktyg | 
 |---|---|---| 
 | Komponent | tests/unit/test_pricing.py | pytest | 
-| API | (lektion 4) | | 
+
+
+| API | tests/api/test_api.py | httpx och pytest |
+
+Kvar för Karin: 
+Regler och behörighet testas på API-nivån, eftersom webbsidan och API:t är två vägar till samma data. 
+Vid varje push kör pipelinen i ci.yml komponent-, API- och GUI-testerna.
+
 | GUI | tests/gui/test_produkt.py | Playwright med Page Objects | 
 Verktyg för GUI-tester: Playwright. De mest relevanta föredelarna med Playwright over Selenium var i ämnena Väntan och Stabilitet (sparar oss mycket tid och frustration om vi använder ett verktyg som aktivt lyssnar efter att elementen laddats in klart framför att behöva vänta en satt tid.), och Felsökning (Playwrights Trace-funktion är mer detaljerad och lättläst snarare än loggar som Selenium använder.) Selenium har vissa fördelar när det kommer till kriteriet "Webbläsare och enheter" eftersom att den tillåter att man testar riktiga mobiler med hjälp av Appium.
 Fall som testas i webbläsaren: MT-01, MT-04, MT-08, MT-11, MT-25. MT-13 är ett komponenttest.
@@ -187,6 +194,11 @@ Att Anna följer upp på testerna är bra, men hade också behövt finnas regel 
 ## 5. Icke-funktionella tester – prestanda och säkerhet
 
 *Vilken prestandabudget gäller (till exempel p95 och felandel), och hur kontrollerar du den? Vilka säkerhetsrisker testar du, och med vilka verktyg?*
+
+Säkerhet: API:t har en behörighetsbrist (IDOR). En inloggad kund kan läsa 
+andra kunders ordrar med GET /api/orders/{id}. 
+Testet test_kund_kan_inte_lasa_annan_kunds_order i tests/api/test_api.py 
+bevisar felet. Det är markerat som känt fel med strict=True. 
 
 ## 6. Hållbarhet – mätning före och efter
 

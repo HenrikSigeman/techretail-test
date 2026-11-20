@@ -1,3 +1,58 @@
+import pytest 
+ 
+ 
+def test_produkt_1_heter_skruvdragare(api_client): 
+    # Act 
+    response = api_client.get_product(1) 
+    # Assert 
+    assert response.status_code == 200 
+    assert response.json()["name"] == "Skruvdragare 18 V"
+
+
+def test_produkt_har_ratt_falt_och_typer(api_client): 
+    # Act 
+    produkt = api_client.get_product(3).json() 
+    # Assert 
+    assert isinstance(produkt["id"], int) 
+    assert isinstance(produkt["name"], str) 
+    assert isinstance(produkt["price_ore"], int) 
+    assert isinstance(produkt["in_stock"], bool) 
+
+def test_okand_produkt_finns_inte(api_client): 
+    # Act 
+    response = api_client.get_product(999) 
+    # Assert 
+    assert response.status_code == 404
+
+def test_kundvagnen_kraver_inloggning(api_client): 
+    # Act 
+    response = api_client.get_cart() 
+    # Assert 
+    assert response.status_code == 401
+
+def test_tech10_ger_tio_procent_rabatt(logged_in_api_client): 
+    # Arrange: tio hammare i kundvagnen 
+    logged_in_api_client.add_to_cart(4, quantity=10) 
+    # Act 
+    kundvagn = logged_in_api_client.apply_discount("TECH10").json() 
+    # Assert 
+    assert kundvagn["discount_ore"] == 24900 
+
+
+def test_utgangen_rabattkod_avvisas(logged_in_api_client): 
+    # Act 
+    response = logged_in_api_client.apply_discount("SOMMAR20") 
+    # Assert 
+    assert response.status_code == 422 
+    assert response.json()["detail"] == "Rabattkoden är ogiltig eller har gått ut."
+
+@pytest.mark.xfail(strict=True, reason="IDOR: andra kunders ordrar kan läsas") 
+def test_kund_kan_inte_lasa_annan_kunds_order(logged_in_api_client): 
+    # Act: order 1002 tillhör Robin Ring, inte Kim Kund 
+    response = logged_in_api_client.get_order(1002) 
+    # Assert 
+    assert response.status_code in (403, 404) 
+
 """Dina API-tester (lektion 4).
 
 TODO 1: Skriv minst 6 API-tester. Blanda tre slag:
