@@ -1,0 +1,62 @@
+# SYNTETISK TESTDATA – inga riktiga personer
+ordernummer,namn,epost,telefon,gatuadress,postnummer,ort,personnummer,kommentar
+20261419,Anton Forsberg,anton.forsberg@example.com,070-174 06 80,Nyvägen 34,42702,Karlskoga,19930805-2381,"Reklamation på order 20261419, se ärende 92135."
+20261914,Wilma Lundström,wilma.lundstrom@example.net,070-174 06 43,Järnvägsvägen 9,87080,Lidingö,19930812-2390,
+20261721,Gösta Svärd,gosta.svard@example.org,070-174 06 23,Stationsvägen 2,23488,Linköping,19941101-2397,
+20261695,Maria Haglund,maria.haglund@example.com,070-174 06 41,Nystigen 109,84345,Södertälje,19960122-2384,
+20261085,Alexander Lindquist,alexander.lindquist@example.net,070-174 06 35,Furutorget 8,54263,Linköping,19960127-5861,
+20261225,Mats Sundberg,mats.sundberg@example.net,070-174 06 16,Parkgatan 083,84640,Karlstad,19970424-2396,
+20261623,Gunvor Wallgren,gunvor.wallgren@example.com,070-174 06 64,Strandvägen 847,36125,Norrköping,19980719-2381,"Reklamation på order 20261623, se ärende 79684."
+20261527,Julia Johansson,julia.johansson@example.com,070-174 06 25,Kyrkgränd 20,42843,Örebro,19980726-2382,
+20261233,Claes Persson,claes.persson@example.org,070-174 06 31,Gengatan 4,61399,Landskrona,19991019-2393,
+20261042,Astrid Lundholm,astrid.lundholm@example.com,070-174 06 79,Nytorget 8,33993,Norrköping,19810105-2382,
+20261673,Erik Andrén,erik.andrén@example.org,070-174 06 88,Trädgårdstorget 2,34520,Malmö,19820324-9274,Leverans till grannen om ingen är hemma.
+20261080,Stefan Almqvist,stefan.almqvist@example.net,070-174 06 24,Skolvägen 841,47070,Falun,19820330-2396,"Kunden ringde, personnummer 19820330-2396, vill byta adress."
+20261486,Maria Holmberg,maria.holmberg@example.org,070-174 06 96,Ängsstigen 017,36839,Helsingborg,19830615-2383,"Kunden ringde, personnummer 19830615-2383, vill byta adress."
+20261150,Emanuel Melander,emanuel.melander@example.com,070-174 06 11,Nyvägen 0,46972,Eskilstuna,19840830-2399,"Kunden ringde, personnummer 19840830-2399, vill byta adress."
+20261552,Simone Öberg,simone.oberg@example.net,070-174 06 71,Idrottsstigen 91,53092,Borlänge,19840906-2398,"Reklamation på order 20261552, se ärende 85200."
+20261664,Elisabeth Karlsson,elisabeth.karlsson@example.org,070-174 06 99,Villagatan 36,22594,Skellefteå,19851122-2385,
+20261324,Barbro Eriksson,barbro.eriksson@example.org,070-174 06 91,Industrivägen 2,74199,Västerås,19870209-2381,"Reklamation på order 20261324, se ärende 68550."
+20261564,Catarina Höglund,catarina.hoglund@example.org,070-174 06 40,Trädgårdsgatan 04,85014,Södertälje,19870216-2390,"Kunden ringde, personnummer 19870216-2390, vill byta adress."
+20261137,Erik Johansson,erik.johansson@example.net,070-174 06 94,Kvarnstigen 542,40764,Halmstad,19880517-2395,"Kunden ringde, personnummer 19880517-2395, vill byta adress."
+20261896,Thi Persson,thi.persson@example.com,070-174 06 72,Åkergatan 15,32228,Halmstad,19890816-2392,
+20261153,Martin Lindström,martin.lindstrom@example.com,070-174 06 65,Skolgränd 354,77959,Karlstad,19760218-2391,
+20261723,Roland Landin,roland.landin@example.com,070-174 06 70,Bäckgatan 5,43131,Trollhättan,19760225-2384,Leverans till grannen om ingen är hemma.
+20261786,Ingrid Lindell,ingrid.lindell@example.com,070-174 06 54,Industrivägen 1,92339,Motala,19770520-2385,"Kunden ringde, personnummer 19770520-2385, vill byta adress."
+20261330,Fredrik Lundberg,fredrik.lundberg@example.net,070-174 06 24,Villastigen 118,19262,Eskilstuna,19780811-2390,
+20261838,Harry Sundell,harry.sundell@example.net,070-174 06 96,Ängsstigen 09,35326,Skövde,19780818-2385,Leverans till grannen om ingen är hemma.
+20261614,Erik Johansson,erik.johansson@example.net,070-174 06 94,Kvarnstigen 542,40764,Halmstad,19880517-2395,
+20261152,Alexander Lindquist,alexander.lindquist@example.net,070-174 06 35,Furutorget 8,54263,Linköping,19960127-5861,
+20261835,Simone Öberg,simone.oberg@example.net,070-174 06 71,Idrottsstigen 91,53092,Borlänge,19840906-2398,Delbetalning beviljad för 840906-2398.
+20261726,Anton Forsberg,anton.forsberg@example.com,070-174 06 80,Nyvägen 34,42702,Karlskoga,19930805-2381,
+20261024,Simone Öberg,simone.oberg@example.net,070-174 06 71,Idrottsstigen 91,53092,Borlänge,19840906-2398,Kollin nr 7107003967 skickat.
+20261814,Elisabeth Karlsson,elisabeth.karlsson@example.org,070-174 06 99,Villagatan 36,22594,Skellefteå,19851122-2385,
+20261491,Maria Holmberg,maria.holmberg@example.org,070-174 06 96,Ängsstigen 017,36839,Helsingborg,19830615-2383,
+20261247,Gunvor Wallgren,gunvor.wallgren@example.com,070-174 06 64,Strandvägen 847,36125,Norrköping,19980719-2381,Delbetalning beviljad för 980719-2381.
+20261962,Astrid Lundholm,astrid.lundholm@example.com,070-174 06 79,Nytorget 8,33993,Norrköping,19810105-2382,
+20261806,Gösta Svärd,gosta.svard@example.org,070-174 06 23,Stationsvägen 2,23488,Linköping,19941101-2397,Leverans till grannen om ingen är hemma.
+20261085,Alexander Lindquist,alexander.lindquist@example.net,070-174 06 35,Furutorget 8,54263,Linköping,19960127-5861,
+20261398,Mats Sundberg,mats.sundberg@example.net,070-174 06 16,Parkgatan 083,84640,Karlstad,19970424-2396,"Reklamation på order 20261398, se ärende 65512."
+20261488,Thi Persson,thi.persson@example.com,070-174 06 72,Åkergatan 15,32228,Halmstad,19890816-2392,"Kunden ringde, personnummer 19890816-2392, vill byta adress."
+20261096,Anton Forsberg,anton.forsberg@example.com,070-174 06 80,Nyvägen 34,42702,Karlskoga,19930805-2381,"Kunden ringde, personnummer 19930805-2381, vill byta adress."
+20261630,Gösta Svärd,gosta.svard@example.org,070-174 06 23,Stationsvägen 2,23488,Linköping,19941101-2397,
+20261664,Mats Sundberg,mats.sundberg@example.net,070-174 06 16,Parkgatan 083,84640,Karlstad,19970424-2396,Leverans till grannen om ingen är hemma.
+20261617,Martin Lindström,martin.lindstrom@example.com,070-174 06 65,Skolgränd 354,77959,Karlstad,19760218-2391,"Reklamation på order 20261617, se ärende 23927."
+20261247,Thi Persson,thi.persson@example.com,070-174 06 72,Åkergatan 15,32228,Halmstad,19890816-2392,Kollin nr 2723942271 skickat.
+20261403,Martin Lindström,martin.lindstrom@example.com,070-174 06 65,Skolgränd 354,77959,Karlstad,19760218-2391,"Reklamation på order 20261403, se ärende 83305."
+20261634,Julia Johansson,julia.johansson@example.com,070-174 06 25,Kyrkgränd 20,42843,Örebro,19980726-2382,
+20261264,Anton Forsberg,anton.forsberg@example.com,070-174 06 80,Nyvägen 34,42702,Karlskoga,19930805-2381,
+20261245,Erik Johansson,erik.johansson@example.net,070-174 06 94,Kvarnstigen 542,40764,Halmstad,19880517-2395,
+20261434,Wilma Lundström,wilma.lundstrom@example.net,070-174 06 43,Järnvägsvägen 9,87080,Lidingö,19930812-2390,Leverans till grannen om ingen är hemma.
+20261112,Wilma Lundström,wilma.lundstrom@example.net,070-174 06 43,Järnvägsvägen 9,87080,Lidingö,19930812-2390,
+20261792,Mats Sundberg,mats.sundberg@example.net,070-174 06 16,Parkgatan 083,84640,Karlstad,19970424-2396,Leverans till grannen om ingen är hemma.
+20261166,Astrid Lundholm,astrid.lundholm@example.com,070-174 06 79,Nytorget 8,33993,Norrköping,19810105-2382,"Reklamation på order 20261166, se ärende 64841."
+20261586,Astrid Lundholm,astrid.lundholm@example.com,070-174 06 79,Nytorget 8,33993,Norrköping,19810105-2382,"Kunden ringde, personnummer 19810105-2382, vill byta adress."
+20261122,Erik Andrén,erik.andrén@example.org,070-174 06 88,Trädgårdstorget 2,34520,Malmö,19820324-9274,"Kunden ringde, personnummer 19820324-9274, vill byta adress."
+20261954,Stefan Almqvist,stefan.almqvist@example.net,070-174 06 24,Skolvägen 841,47070,Falun,19820330-2396,
+20261177,Barbro Eriksson,barbro.eriksson@example.org,070-174 06 91,Industrivägen 2,74199,Västerås,19870209-2381,Delbetalning beviljad för 870209-2381.
+20261458,Thi Persson,thi.persson@example.com,070-174 06 72,Åkergatan 15,32228,Halmstad,19890816-2392,
+20261073,Ingrid Lindell,ingrid.lindell@example.com,070-174 06 54,Industrivägen 1,92339,Motala,19770520-2385,"Kunden ringde, personnummer 19770520-2385, vill byta adress."
+20261717,Elisabeth Karlsson,elisabeth.karlsson@example.org,070-174 06 99,Villagatan 36,22594,Skellefteå,19851122-2385,Kollin nr 9405174469 skickat.
+20261432,Claes Persson,claes.persson@example.org,070-174 06 31,Gengatan 4,61399,Landskrona,19991019-2393,
+20261172,Erik Andrén,erik.andrén@example.org,070-174 06 88,Trädgårdstorget 2,34520,Malmö,19820324-9274,Leverans till grannen om ingen är hemma.
