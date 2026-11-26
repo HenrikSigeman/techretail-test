@@ -64,6 +64,48 @@ Steg 2. Röda tester måste dokumenteras och följas upp, gärna samma dag och a
 
 Inledningsvis kommer kostnaden att vara ganska hög. Tid kommer att gå ifrån att utveckla till att testa och fixa, och att dokumentera, men nyttan blir att det blir mindre technical debt, kunskapen sprids i utvecklarteamet och man blir mindre beroende av en person som kan allt.
 
+# Fördjupning 4
+* Vilka tre endpoints testar du först? Ange sannolikhet och konsekvens för var och en:
+
+/api/orders
+s 3 x k 3 = risk 9
+Positivt testfall: Beställ en vara som finns i lagret.
+Förväntad statuskod: 201 - Created
+
+Negativt testfall: Beställ fler varor än vi har i lagret.
+Förväntat resultat: 409- Conflict
+
+/api/cart/discount
+s 3 x k 3 = risk 9
+Positivt testfall: Lägg 10 produkter i kundvagnen och använd en fungerande rabattkod.
+Förväntad statuskod: 200 - OK
+
+Negativt testfall: Lägg 10 produkter i kundvagnen och använd enutgången rabattkod.
+Förväntad statuskod: 422 - Unprocessable content
+
+
+/api/orders/{id}
+s 3 x k 3 = risk 9
+Positivt testfall: Logga in som Kim Kund. Hämta order med ID 1001.
+Förväntad statuskod: 200 - OK
+
+Negativt testfall: Logga in som Robin Ring. Hämta order med ID 1001.
+Förväntad statuskod: 404 - Missing
+
+Vilka endpoints som väljs bort:
+GET api/categories.
+Motivering: Väldigt låg risk att ge konsekvenser om den slutar att fungera och förändras sällan. Kan behöva ses över om anropet används av kritiska system eller regelbundet misslyckas. 
+
+| Anrop | Ej inloggad | Kim Kund | Robin Ring | 
+|---|---|---|---|
+| GET /api/orders/1001, Kims order | 404 | 200 - Innerhåller information om ordern med ID 1001 | 404 |
+| GET /api/orders | 401 | 200 - Lista på Kim Kunds ordrar, inklusive bland annat leveransadresser | 200 - Lista på Kim Kunds ordrar, inklusive bland annat leveransadresser |
+| GET /api/cart | 200 - Information om varorna och kostnaden av varorna i kundvagnen | 200 | 200 |
+| GET /api/me | 401 | 200 - id, namn och epost | 200 - id, namn och epost |
+
+Ett GUI-test når aldrig när en användare försöker att komma åt en annan användares ordrar.
+Mitt IDOR test täcker när Kim Kund försöker att komma åt order 1001.
+
 ## 3. Testnivåer och verktyg
 
 *Hur fördelar du testerna på testpyramidens nivåer komponent (enhet), API och GUI? Ge exempel ur ditt eget repo för varje nivå. Vilka verktyg använder du, och vad körs vid varje push respektive nattligt?*
