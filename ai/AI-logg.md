@@ -57,8 +57,6 @@ def test_nollpris_ger_noll_efter_rabatt():
 - **Kostnad:** 15 sekunder och 0.3 tokens. $ 0.003
 - **Beslut:** Jag har behållit resultatet som del av testsviten. Även om det är högst osannolikt att en kund kommer att handla något för 0.0kr och försöka att få rabatt på det så kan ett plötsligt misslyckat test betyda att det har uppstått ett allvarligt fel med koden.
 
----
-
 ### 2026-11-09 . Lektion 2 . Verktyg: Copilot
 
 - **Bad:** Använd Playwright MCP. Öppna http://127.0.0.1:8000/produkter och sök 
@@ -132,6 +130,48 @@ def test_produkt_namn_visas_korrekt(page):
 - **Kostnad:** 4 minuter, 20 credits (~$0.2)
 - **Beslut:** Behövde kompletteras. Copilot skrev fyra tester istället för ett och de tre så extra resurser gick åt till att skriva tester som jag inte bett om. Jag har tagit bort de tre tester som jag inte bad om och behöll "test_sokning_efter_lampa_visar_resultat", har behövt skriva om testet. Från början så klickade den inte på sök-knappen innan den kollar upp antalet resultat, vilket negerar själva testet. Vad gäller products_page som Copilot genererade så fanns det bra och dåliga metoder. Filen behövde ses över och kompletteras med mer användbara metoder. Exempelvis så finns det en metod som heter "search" som tar emot en string och förväntas fylla i sökfältet med den, och returnerar sedan resultatet. Den gör detta utan att klicka på "filtrera"-knappen. Namnet behöver också bytas ut till "filter_by" för att förtydliga att listan inte aktivt hämtar poster vid filtrering. Jag tar bort de onödiga testerna, byter namn på "search" till "filter_by", samt kompletterar metoden med att den faktiskt klickar på "filtrera"-knappen.
 
+
+### 2026-11-26 · Lektion 5 · Verktyg: AI-genererad fil i repot 
+ - **Bad:** "Skriv Playwright-tester i Python för kassan i vår webbutik." 
+  Inget krav, inga fixtures, inga regler. 
+  - **Fick:** Fyra tester i ai/granska/test_ai_kassa.py. 
+  - **Kör:** Nej. ModuleNotFoundError: No module named 'requests'. 
+  - **Bryt:** Inget test kan bli rött av rätt anledning, till exempel i test_api_order så blir r.status_code aldrig 500. 
+  - **Data:** Ja, namn och personnummer i test_kassa. Det bryter mot regel 7. 
+  Jag byter de värden mot värdena i testkonton, och tar även bort referens till personnummer. 
+  - **Kostnad:** Cirka 7 minuter granskning. 
+  - **Beslut:** test_api_order och test_kassa skrivs om. Test_kassa testar bara en del av köp-processen (gå till kassamed en vara i varukorgen). test_presentkort_drar_av_beloppet och test_tre_misslyckade_inloggningar_lasar_kontot testar ingenting i varken kravspec eller manualen.
+
+### 2026-11-26 · Lektion 5 · Verktyg: Copilot agent 
+ - **Bad:** Prompten i labbens steg 9, test 2 (TR-13). 
+ - **Fick:** test_okand_rabattkod_avvisas i tests/api/test_ai_genererade.py. Det väntade statuskoden 400 och texten ur kravet. 
+ - **Kör:** Rött: E assert 422 = 400 
+ - **Bryt:** Testet var redan rött. Felet låg i testets facit, inte i butiken. 
+ - **Data:** Nej, endast testkonton och rabattkoder. 
+ - **Kostnad:** Cirka 10 minuter. 
+ - **Beslut:** Ändrat. Ändrade förväntad statuskod till 422. Kravspec nämner ingen förväntad statuskod i detta fall, men i /docs och i andra liknande tester förväntas svarskoden vara 422. 
+
+### 2026-11-26 · Lektion 5 · Verktyg: Copilot agent 
+- **Bad:** Prompten i labbens steg 9, test 1 (TR-13). 
+- **Fick:** test_ny_giltig_rabattkod_ersatter_den_tidigare i tests/api/test_ai_genererade.py. 
+Det kontrollerade enbart statuskoden 200. 
+- **Kör:** Grönt. 
+- **Bryt:** Bytte VINTER15 mot TECH10
+- **Data:** Nej, endast testkonton och rabattkoder. 
+- **Kostnad:** Cirka 10 minuter. 
+- **Beslut:** Ändrat. Testet kontrollerade inte om den senare rabattkoden bytte ut den första, utan väntade endast på en 200-kod som svar. Den testade inte kravet i TR-13 där en andra rabattkod alltid byter ut den första. Testet ändrades så att den kontrollerade namnet på den aktiva rabattkoden, samt den nuvarande rabatten i procent.
+
+### 2026-11-27 · Lektion 5 · Verktyg: Copilot agent 
+ - **Bad:** Prompten i labbens steg 9, test 3 (TR-03). 
+ - **Fick:** test_okand_epost_ger_samma_besked_som_fel_losenord i tests/api/test_ai_genererade.py. 
+  Det väntade statuskoden 401 och texten ur kravet. 
+ - **Kör:** Grönt. 
+ - **Bryt:** Bytte "Fel e-post eller lösenord." mot "Fel lösenord". 
+ - **Data:** Nej, endast en påhittad e-postadress och kursens testlösenord. 
+ - **Kostnad:** Cirka 5 minuter. 
+ - **Beslut:** Behållet utan ändring. Testet blir rött av rätt anledning.
+
+---
 ## Summering (fylls i före inlämningen)
 
 | | Antal / värde |

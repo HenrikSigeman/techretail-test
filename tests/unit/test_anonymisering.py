@@ -6,7 +6,15 @@ Fixturerna och de två exempeltesterna är givna. Skriv dina egna tester under T
 import pytest
 
 from anonymisering.anonymize import load_test_personnummer, luhn_ok
-
+from faker import Faker 
+ 
+from anonymisering.anonymize import ( 
+    load_test_personnummer, 
+    luhn_ok, 
+    mask_personnummer, 
+    pseudonymize_email, 
+    synthetic_customer, 
+) 
 
 @pytest.fixture
 def testpersonnummer() -> list[str]:
@@ -36,3 +44,19 @@ def test_exempel_luhn_avvisar_fel_kontrollsiffra(testpersonnummer):
 #   - samma e-post ger samma pseudonym, och en annan nyckel ger en annan pseudonym
 #   - mask_personnummer maskerar ett testpersonnummer men lämnar ett kollinummer som inte klarar Luhn
 #   - synthetic_customer ger ett personnummer som finns i fixturen testpersonnummer
+
+
+
+def test_samma_epost_ger_samma_pseudonym(hmac_nyckel): 
+    forsta = pseudonymize_email("kund@example.com", hmac_nyckel) 
+    andra = pseudonymize_email(" KUND@example.com", hmac_nyckel) 
+    assert forsta == andra
+
+def test_testpersonnummer_maskeras(testpersonnummer): 
+    pnr = testpersonnummer[0] 
+    text = f"Ring {pnr[:8]}-{pnr[8:]}" 
+    assert mask_personnummer(text) == f"Ring {pnr[:8]}-****"
+
+def test_syntetisk_kund_far_testpersonnummer(testpersonnummer): 
+    kund = synthetic_customer(Faker("sv_SE"), testpersonnummer) 
+    assert kund["personnummer"].replace("-", "") in testpersonnummer

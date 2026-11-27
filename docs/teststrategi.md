@@ -233,6 +233,12 @@ Att Anna följer upp på testerna är bra, men hade också behövt finnas regel 
 
 *Hur använder du AI för att ta fram och förbättra tester? Hur granskar du resultatet med GRANSKA-kortet? Hänvisa till poster i `ai/AI-logg.md`.*
 
+Jag använder Copilot Agent för att gå från krav till scenarier 
+och från scenarier till testutkast, med promptmallarna i ai/prompts/. 
+Varje utkast granskas med GRANSKA-kortet innan det checkas in. 
+Steget Bryt är viktigast: Det första testet blev grönt fast rabattkoden ändrades till en okänd sådan så den testade inte regeln. (se AI-loggen, lektion 5). 
+Jag skickar aldrig persondata till en AI-tjänst, endast krav, kod och testkonton. 
+
 ## 5. Icke-funktionella tester – prestanda och säkerhet
 
 *Vilken prestandabudget gäller (till exempel p95 och felandel), och hur kontrollerar du den? Vilka säkerhetsrisker testar du, och med vilka verktyg?*

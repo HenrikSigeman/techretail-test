@@ -63,36 +63,31 @@ def get_key() -> bytes:
 # ------------------------------------------------------------------ din uppgift
 
 def pseudonymize_email(email: str, key: bytes) -> str:
-    """Byt e-postadressen mot en pseudonym med HMAC-SHA256.
-
-    - Gör om adressen till gemener och ta bort mellanslag först, så att Kim@Example.com
-      och kim@example.com får samma pseudonym.
-    - Returnera "kund-<de 16 första tecknen i hexdigest>@example.com".
-    """
-    # TODO 1: använd hmac.new(key, ..., hashlib.sha256).hexdigest()
-    raise NotImplementedError("TODO 1: pseudonymize_email")
+    normalized = email.strip().lower().encode() 
+    digest = hmac.new(key, normalized, hashlib.sha256).hexdigest() 
+    return f"kund-{digest[:16]}@example.com"
 
 
 def mask_personnummer(text: str) -> str:
-    """Maskera alla personnummer i en text: de fyra sista siffrorna blir ****.
-
-    Exempel: "Ring 19440116-2385" blir "Ring 19440116-****" och "440116-2385" blir "440116-****".
-    Bara tal som klarar Luhn-kontrollen är personnummer. Andra tal (kollinummer,
-    ordernummer) lämnas orörda.
-    """
-    # TODO 2: använd PNR_PATTERN.sub(...) med en funktion som kontrollerar luhn_ok
-    raise NotImplementedError("TODO 2: mask_personnummer")
+    def replace(match: re.Match) -> str: 
+        century, date_part, sep, last4 = match.groups() 
+        if not luhn_ok(date_part + last4): 
+            return match.group(0) 
+        return f"{century or ''}{date_part}{sep}****" 
+ 
+    return PNR_PATTERN.sub(replace, text)
 
 
 def synthetic_customer(fake: Faker, test_personnummer: list[str]) -> dict[str, str]:
-    """Skapa en syntetisk kund med Faker (sv_SE).
-
-    Returnera en dict med nycklarna namn, gatuadress, postnummer, ort, telefon och personnummer.
-    Personnumret väljs ur test_personnummer (använd fake.random_element) och skrivs ÅÅÅÅMMDD-NNNN.
-    Telefon: använd PTS-serien för fiktiv användning, till exempel "070-174 06 " + två siffror mellan 05 och 99.
-    """
-    # TODO 3
-    raise NotImplementedError("TODO 3: synthetic_customer")
+    pnr = fake.random_element(test_personnummer) 
+    return { 
+        "namn": fake.name(), 
+        "gatuadress": fake.street_address(), 
+        "postnummer": fake.postcode(), 
+        "ort": fake.city(), 
+        "telefon": f"070-174 06 {fake.random_int(5, 99):02d}", 
+        "personnummer": f"{pnr[:8]}-{pnr[8:]}", 
+    } 
 
 
 # ------------------------------------------------------------------ givet: hela flödet
